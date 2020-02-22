@@ -27,14 +27,20 @@
         <tr>
             <th>No</th>
             <th>Name</th>
-            <th>Details</th>
+            <th>Anotation</th>
+            <th>Description</th>
+            <th>Price</th>
+            <th>Balance</th>
             <th width="280px">Action</th>
         </tr>
 	    @foreach ($products as $product)
 	    <tr>
 	        <td>{{ ++$i }}</td>
 	        <td>{{ $product->name }}</td>
-	        <td>{{ $product->detail }}</td>
+	        <td>{{ $product->short_description }}</td>
+            <td>{{ $product->full_description }}</td>
+            <td>{{ $product->price }}</td>
+            <td>{{ $product->balance }}</td>
 	        <td>
                 <form action="{{ route('products.destroy',$product->id) }}" method="POST">
                     <a class="btn btn-info" href="{{ route('products.show',$product->id) }}">Show</a>
@@ -45,7 +51,7 @@
 
                     @csrf
                     @method('DELETE')
-                    @can('product-delete')
+                    @can('products-delete')
                     <button type="submit" class="btn btn-danger">Delete</button>
                     @endcan
                 </form>

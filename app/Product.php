@@ -16,6 +16,11 @@ class Product extends Model
 
     public function category()
     {
-        return $this->belongsToMany(Category::class);
+        return $this->belongsToMany(Category::class, 'products_categories');
+    }
+
+    public function scopeOrderProducts()
+    {
+        return User::orderBy('id','DESC')->paginate(5);
     }
 }
