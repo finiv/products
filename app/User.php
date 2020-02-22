@@ -39,4 +39,10 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function scopeOrderUsers()
+    {
+        return User::orderBy('id','DESC')->paginate(5);
+    }
+    
 }
