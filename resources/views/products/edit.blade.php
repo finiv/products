@@ -53,6 +53,11 @@
 		            <strong>Balance:</strong>
 		            <input type="text" name="balance" class="form-control" placeholder="Balance" value="{{ $product->balance }}">
 		        </div>
+                @foreach($categories as $category)
+		            <select name="category_id[]" id="" multiple class="form-control">
+                        <option value="{{ $category->id }}">{{ $category->name }}</option>
+                    </select>
+                @endforeach
 		    </div>
 		    <div class="col-xs-12 col-sm-12 col-md-12 text-center">
 		      <button type="submit" class="btn btn-primary">Submit</button>

@@ -4,7 +4,7 @@
 namespace App\Http\Controllers;
 
 
-use App\Product;
+use App\{Product, Category};
 use Illuminate\Http\Request;
 use App\Http\Requests\{StoreProductRequest, UpdateProductRequest};
 
@@ -42,7 +42,9 @@ class ProductController extends Controller
      */
     public function create()
     {
-        return view('products.create');
+        $categories = Category::all();
+
+        return view('products.create', compact('categories'));
     }
 
 
@@ -54,7 +56,9 @@ class ProductController extends Controller
      */
     public function store(StoreProductRequest $request)
     {
-        Product::create($request->all());
+        $product = Product::create($request->all());
+
+        $product->category()->sync($request->category_id);
 
         return redirect()->route('products.index')
                         ->with('success','Product created successfully.');
@@ -81,7 +85,9 @@ class ProductController extends Controller
      */
     public function edit(Product $product)
     {
-        return view('products.edit',compact('product'));
+        $categories = Category::all();
+
+        return view('products.edit',compact('product', 'categories'));
     }
 
 
@@ -96,6 +102,7 @@ class ProductController extends Controller
     {
         $product->update($request->all());
 
+        $product->category()->sync($request->category_id);
 
         return redirect()->route('products.index')
                         ->with('success','Product updated successfully');
